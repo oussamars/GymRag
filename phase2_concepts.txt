@@ -1,0 +1,19 @@
+These are the things that will feel obvious now but that people mysteriously forget when they're neck-deep in RAG code:
+
+The model is stateless. Every single API call starts from zero. The "memory" in your Day 3 chatbot was you, resending the history — not the model 
+remembering anything. When you build a RAG system, you'll be tempted to think the model "knows" something from a previous call. It doesn't. Ever.
+
+The config object belongs to the caller. Pass it through, don't unwrap it. You fought this instinct three times this week — in Phase 3 you'll be building more
+complex pipelines where this matters even more.
+
+response.text is a shortcut over a nested structure. You know what's underneath it because you inspected it on Day 1. When RAG responses start coming back with
+mixed content blocks (retrieved text + model answer), that shortcut will sometimes fail silently and you'll need to navigate the structure manually.
+
+Temperature is a token-level probability distribution, not a "creativity slider". This distinction matters in Phase 3 because you'll want near-zero temperature
+for factual retrieval answers — you want the model to report what's in the retrieved document, not creatively rephrase or hallucinate additions to it.
+
+The context window is a fixed whiteboard, not expandable memory. In RAG you'll be stuffing retrieved documents into the prompt. If you retrieve too much, you
+overflow the window and lose your system instruction or earlier context. You need to remember this ceiling exists before you hit it in production.
+
+A system instruction shapes behavior, not knowledge. The single most important thing from Task 4 yesterday. No matter how good your prompt is, the model cannot
+tell a user their membership renewal date unless that data is injected into the context. RAG is the mechanism that does that injection.
