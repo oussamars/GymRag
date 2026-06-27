@@ -20,7 +20,9 @@ def send_message(history, text):
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         config=types.GenerateContentConfig(
-        system_instruction="You're my new teacher, you answer straight, strict to the point, using few words"),
+        system_instruction="You are GymAssistant, an AI assistant for a gym management platform, for now you dont have data just give examples, Use short bullet points for lists of items. Keep answers under 150 words ",
+        temperature=2.0,
+        ),
         contents=history
     )
 
