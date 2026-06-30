@@ -4,9 +4,37 @@ from dotenv import load_dotenv
 from google.genai import types
 import json
 
-load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key)
+# You're building a single-session GymAssistant CLI chatbot. It should: maintain conversation history across turns
+# use your Day 8/13 system instruction, have access to all three tools from Day 18
+# and be able to return structured JSON when the gym owner asks for a report instead of a conversational answer.
+
+#####################system instruction##################################
+system_instruction="""
+You are GymAssistant, an AI assistant for a gym management platform.
+
+Answer questions using information provided in the conversation or retrieved through available tools. Do not use any knowledge from your training about specific gyms, prices, or schedules.
+Return structured JSON when the gym owner asks for a report instead of a conversational answer
+You can answer questions about:
+- clients
+- subscriptions
+- payments
+- attendance
+- gym statistics
+- business insights
+
+Rules:
+- Never invent information.
+- Only use provided data.
+- If information is missing, say you don't have access to it.
+- Ask for clarification if the request is unclear.
+- Give concise, practical answers, respond in plain language. Use short bullet points for lists of items. Keep answers under 150 words unless the question requires more detail.
+- If asked about topics unrelated to gym management, politely explain that you're specialized for gym operations and redirect the conversation.
+
+Your goal:
+Help the gym owner understand their gym operations and make better decisions.
+        """
+
+#####################tool data and functions##################################
 
 mock_database = {
     "M001": {
@@ -63,7 +91,7 @@ get_unpaid_members_declaration = {
                 "description": "The year to check, for example 2026."
             }
         },
-        "required": []
+        "required": ["month", "year"]
             }
 }
 
@@ -93,7 +121,7 @@ def get_member_stats(member_id: str) -> dict:
         return {"error": "member not found"}
     return mock_database[member_id]
 
-def get_unpaid_members(month: str, year: int) -> list:
+def get_unpaid_members(month: str=None, year: int=None) -> list:
     """Returns members who have not paid their subscription for a specific month."""
     return [
         {
@@ -133,41 +161,63 @@ def update_member_plan(member_id: str, new_plan: str) -> dict:
 
 
 
+#####################client setup##################################
+
+load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key)
 
 
-def ask_with_tools(question, contents=None):
+#####################merge the call tools function with the function that appends the history##################################
+
+
+def send_message(history, text):
+
+    if text.startswith("report "):
+        member_id = text.split(" ")[1]
+
+        report = get_member_stats(member_id)
+        return json.dumps(report, indent=4)
+
     tools = [
         types.Tool(function_declarations=[get_member_stats_declaration, get_unpaid_members_declaration, update_member_plan_declaration])
     ]
     config = types.GenerateContentConfig(
         tools=tools,
-        system_instruction="system_instruction",
+        system_instruction=system_instruction,
+        temperature=0.3,
         automatic_function_calling=types.AutomaticFunctionCallingConfig(
             disable=True
         )
     )
 
-    if contents is None:
-        contents = []
+    if history is None:
+        history = []
 
-    contents.append(
+    history.append(
         types.Content(
             role="user",
-            parts=[types.Part(text=question)]
+            parts=[
+                types.Part(text=text)
+            ]
         )
     )
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=contents,
+        contents=history,
         config=config,
     )
+    function_call = None
 
-    part = response.candidates[0].content.parts[0]
+    for part in response.candidates[0].content.parts:
+        if part.function_call:
+            function_call = part.function_call
+            break
 
-    if not part.function_call:
+    if function_call is None:
+        history.append(response.candidates[0].content)
         return response.text
-    function_call = part.function_call
 
     if function_call.name == "get_member_stats":
         result = get_member_stats(**function_call.args)
@@ -177,17 +227,18 @@ def ask_with_tools(question, contents=None):
 
     elif function_call.name == "update_member_plan":
         result = update_member_plan(**function_call.args)
-    else:
-        return({"error": "unknown function"})
 
-    contents.append(response.candidates[0].content)
+    else:
+        return "I don't know how to execute this request."
+    
+    history.append(response.candidates[0].content)
 
     function_response_part = types.Part.from_function_response(
         name=function_call.name,
         response={"result": result},
     )
 
-    contents.append(
+    history.append(
         types.Content(
             role="user",
             parts=[function_response_part]
@@ -196,14 +247,26 @@ def ask_with_tools(question, contents=None):
 
     final_response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=contents,
+        contents=history,
         config=config,
     )
 
+    history.append(final_response.candidates[0].content)
+    return(final_response.text)
 
-    return final_response.text
+
+
+
+#####################main loop##################################
 
 def main():
-    print(ask_with_tools("Which members haven't paid this month"))
+    history = []
+    while(True):
+        prompt = input("You: ")
+        if (prompt == "quit"):
+            break
+        print(f"Gemini: {send_message(history, prompt)}")
+
+
 
 main()
