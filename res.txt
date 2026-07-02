@@ -1,0 +1,3 @@
+{'ids': [['id_2', 'id_5']], 'embeddings': None, 'documents': [['The gym opens at 9am and closes at 11pm', 'Coach classes start at 5pm to 8pm']], 
+'uris': None, 'included': ['metadatas', 'documents', 'distances'], 'data': None, 'metadatas': [[{'category': 'schedule', 'source': 'gym_faq'}, 
+{'source': 'coach_policy', 'category': 'schedule'}]], 'distances': [[0.20703217387199402, 0.4434303641319275]]}

@@ -1,3 +1,4 @@
 .env
 venv/
 astuce.txt
+chroma_data

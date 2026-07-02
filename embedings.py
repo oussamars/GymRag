@@ -35,6 +35,7 @@ result = client.models.embed_content(
         config=types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY")
 )
 query_vector = result.embeddings[0].values
+print(result.embeddings[2].values)
 
 scores = []
 
