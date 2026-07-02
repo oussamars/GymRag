@@ -2,7 +2,6 @@ from google import genai
 import os
 from dotenv import load_dotenv
 from google.genai import types
-import json
 
 # You're building a single-session GymAssistant CLI chatbot. It should: maintain conversation history across turns
 # use your Day 8/13 system instruction, have access to all three tools from Day 18
@@ -121,7 +120,7 @@ def get_member_stats(member_id: str) -> dict:
         return {"error": "member not found"}
     return mock_database[member_id]
 
-def get_unpaid_members(month: str=None, year: int=None) -> list:
+def get_unpaid_members(month: str=None, year: int=None) -> list: #for now the function doesnt use the month and the year because it's just mockdata but it should be changed when using real data
     """Returns members who have not paid their subscription for a specific month."""
     return [
         {
@@ -173,12 +172,6 @@ client = genai.Client(api_key=api_key)
 
 def send_message(history, text):
 
-    if text.startswith("report "):
-        member_id = text.split(" ")[1]
-
-        report = get_member_stats(member_id)
-        return json.dumps(report, indent=4)
-
     tools = [
         types.Tool(function_declarations=[get_member_stats_declaration, get_unpaid_members_declaration, update_member_plan_declaration])
     ]
@@ -190,9 +183,6 @@ def send_message(history, text):
             disable=True
         )
     )
-
-    if history is None:
-        history = []
 
     history.append(
         types.Content(
@@ -219,17 +209,24 @@ def send_message(history, text):
         history.append(response.candidates[0].content)
         return response.text
 
-    if function_call.name == "get_member_stats":
-        result = get_member_stats(**function_call.args)
+    try:
+        if function_call.name == "get_member_stats":
+            result = get_member_stats(**function_call.args)
 
-    elif function_call.name == "get_unpaid_members":
-        result = get_unpaid_members(**function_call.args)
+        elif function_call.name == "get_unpaid_members":
+            result = get_unpaid_members(**function_call.args)
 
-    elif function_call.name == "update_member_plan":
-        result = update_member_plan(**function_call.args)
+        elif function_call.name == "update_member_plan":
+            result = update_member_plan(**function_call.args)
 
-    else:
-        return "I don't know how to execute this request."
+        else:
+            result = {"error": "unknown function"}
+
+    except (TypeError, KeyError) as e:
+        result = {
+            "error": "tool execution failed",
+            "details": str(e)
+        }
     
     history.append(response.candidates[0].content)
 
