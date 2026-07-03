@@ -21,6 +21,7 @@ query = "What time does the gym open?"
 #         "Coach classes start at 5pm to 8pm",
 # ]
 
+
 result = client.models.embed_content(
         model="gemini-embedding-001",
         contents=[query],

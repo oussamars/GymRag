@@ -1,0 +1,32 @@
+Q: What are the gym opening hours?
+A: The gym is open every day from 6:00 AM to 11:00 PM.
+
+Q: How much does a monthly membership cost?
+A: A monthly membership costs 300 MAD.
+
+Q: Do you offer annual memberships?
+A: Yes. Annual memberships include a discounted rate compared to monthly plans.
+
+Q: Can I cancel my membership?
+A: Yes. You can cancel your membership by contacting the front desk at least 7 days before your renewal date.
+
+Q: What happens if I miss a payment?
+A: Members with overdue payments cannot access the gym until the balance is paid.
+
+Q: Do you have personal trainers?
+A: Yes. Certified personal trainers are available by appointment.
+
+Q: What group classes do you offer?
+A: We offer yoga, HIIT, spinning, and strength training classes.
+
+Q: What are your opening hours?
+A: The gym opens at 9am and closes at 11pm
+
+Q: When are the yoga classes?
+A: Yoga classes are held every Monday, Wednesday, and Friday at 7:00 PM.
+
+Q: What equipment is available?
+A: The gym includes treadmills, rowing machines, free weights, squat racks, and cable machines.
+
+Q: Is there a dress code?
+A: Members must wear appropriate sports clothing and clean athletic shoes while using the facilities.
