@@ -24,7 +24,7 @@ def embed_chromadb_collections():
             config=types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY")
     )
 
-    vector_fixed_collection = get_vectors(fixed_results, len(fixed_chunk))
+    vector_fixed_collection = get_vectors(fixed_results)
     ids_fixed_collection = create_ids("fixed", len(fixed_chunk))
     fixed_metadata = []
     for i in range(len(fixed_chunk)):
@@ -90,7 +90,7 @@ def embed_chromadb_collections():
 
     
 
-def get_vectors(result, num):
+def get_vectors(result):
     vectors = []
     for embedding in result.embeddings[1:]:
         vectors.append(embedding.values)
