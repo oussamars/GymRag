@@ -8,9 +8,7 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
-
 chroma_client = chromadb.PersistentClient(path="./chroma_data")
-
 
 def chunk_and_embed(text):
 
@@ -36,6 +34,7 @@ def chunk_and_embed(text):
 
     return(list_of_dicts)
 
+
 def store_in_chroma(list_of_dicts):
     collection = chroma_client.get_or_create_collection(
         name="gym_chunks",
@@ -50,6 +49,22 @@ def store_in_chroma(list_of_dicts):
     )
 
     return collection
+
+def build_search_query(history, prompt):
+    questions = []
+    for message in history:
+        if message.role == "user":
+            questions.append(message.parts[0].text)
+    questions = questions[-3:]
+    search_query = f"previous questions:\n"
+    for question in questions:
+        search_query += f"-{question}\n"
+    search_query += f"current question:\n{prompt}"
+    return search_query
+
+
+    
+
 
 def retrieve(question, collection, n_results=5):
     query_embeding = client.models.embed_content(
@@ -70,38 +85,8 @@ def retrieve(question, collection, n_results=5):
     for doc, distance in zip(results["documents"][0], results["distances"][0]):
         if distance <= distance_threshold:
             filtered_results.append(doc)
-    print(f"filtred result: {filtered_results}")
-
+    print(f"retrival:\n{filtered_results}")
     return filtered_results
-
-
-def answer(result, question):
-    if len(result) == 0:
-        return "I couldn't find any information about your question in the gym FAQ."
-    else:  
-        context = "\n\n".join(result)
-    content = f"""
-    <context>
-    {context}
-    </context>
-
-    <question>
-    {question}
-    </question>
-
-"""
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-        system_instruction="""You are GymAssistant, an AI assistant for a gym management platform.
-        Answer ONLY using the information inside the <context> section.
-        If the answer is not present in the context, say you don't have enough information.
-        Keep answers concise and under 150 words.""",
-        temperature=0.3,
-        ),
-        contents=content
-    )
-    return response.text
 
 
 def get_vectors(result):
@@ -128,20 +113,82 @@ def load_document(file_path):
         return (None, f"Error: The file at '{file_path}' does not exist.")
 
 
-def main():
-    question = "when does the gym close"
-    collection = chroma_client.get_collection("gym_chunks")
-    if (collection.count() == 0):
-        text, error = load_document("gym_faq.txt")
-        if error:
-            print(error)
-            return
-        collection = store_in_chroma(chunk_and_embed(text))
-    result = retrieve(question, collection, 5)
-    final_answer = answer(result, question)
+def answer(history, result, prompt):
+    if len(result) == 0:
+        context = ""
+    else:  
+        context = "\n\n".join(result)
+    content = f"""
+    <context>
+    {context}
+    </context>
 
-    print(final_answer)
-    
+    <question>
+    {prompt}
+    </question>
+
+"""
+    temp_history = history.copy()
+    temp_history.append(
+        types.Content(
+            role="user",
+            parts=[
+                types.Part(text=content)
+            ]
+        )
+    )
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        config=types.GenerateContentConfig(
+        # system_instruction="""You are GymAssistant, an AI assistant for a gym management platform.
+        # Answer ONLY using the information inside the <context> section.
+        # If the answer is not present in the context, say you don't have enough information.
+        # Keep answers concise and under 150 words.""",
+        temperature=0.3,
+        ),
+        contents=temp_history
+    )
+
+    history.append(
+        types.Content(
+            role="user",
+            parts=[
+                types.Part(text=prompt)
+            ]
+        )
+    )
+
+    history.append(
+        types.Content(
+            role="model",
+            parts=[
+                types.Part(text=response.text)
+            ]
+        )
+    )
+
+    return response.text
+
+
+
+def main():
+    history = []
+    while(True):
+        prompt = input("You: ")
+        if (prompt == "quit"):
+            break
+        collection = chroma_client.get_collection("gym_chunks")
+        if (collection.count() == 0):
+            text, error = load_document("gym_faq.txt")
+            if error:
+                print(error)
+                return
+            collection = store_in_chroma(chunk_and_embed(text))
+        questions_history = build_search_query(history, prompt)
+        result = retrieve(questions_history, collection, 5)
+        print(f"Gemini: {answer(history, result, prompt)}")
+
 
 
 main()
