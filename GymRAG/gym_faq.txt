@@ -1,0 +1,59 @@
+Q: What are the gym opening hours?
+A: The gym is open every day from 6:00 AM to 11:00 PM.
+
+Q: What are your weekend opening hours?
+A: On Saturdays and Sundays the gym opens at 9:00 AM and closes at 11:00 PM.
+
+Q: Is the gym open on public holidays?
+A: The gym is open on most public holidays from 9:00 AM to 6:00 PM. Holiday schedules are announced in advance.
+
+Q: How much does a monthly membership cost?
+A: A monthly membership costs 300 MAD.
+
+Q: Do you offer annual memberships?
+A: Yes. Annual memberships are available and include a discounted rate compared to paying monthly.
+
+Q: Is there a student discount?
+A: Yes. Students receive a 15% discount with a valid student ID.
+
+Q: Can I cancel my membership?
+A: Yes. You can cancel your membership by contacting the front desk at least 7 days before your renewal date.
+
+Q: What happens if I miss a payment?
+A: Members with overdue payments cannot access the gym until the outstanding balance is paid.
+
+Q: How can I sign up for a membership?
+A: You can register at the front desk or through the gym's website by completing the membership form.
+
+Q: What payment methods do you accept?
+A: We accept cash, credit cards, debit cards, and mobile payments.
+
+Q: Do you have personal trainers?
+A: Yes. Certified personal trainers are available by appointment.
+
+Q: How much does personal training cost?
+A: Personal training sessions start at 200 MAD per session, with discounted packages available.
+
+Q: What group classes do you offer?
+A: We offer yoga, HIIT, spinning, strength training, Pilates, and Zumba.
+
+Q: When are the yoga classes?
+A: Yoga classes are held every Monday, Wednesday, and Friday at 7:00 PM.
+
+Q: Do I need to book group classes?
+A: Yes. Group classes should be booked in advance through the gym app or at the front desk.
+
+Q: What equipment is available?
+A: The gym includes treadmills, rowing machines, free weights, squat racks, cable machines, and stationary bikes.
+
+Q: Is there a dress code?
+A: Members must wear appropriate sports clothing and clean athletic shoes while using the facilities.
+
+Q: Do you provide lockers?
+A: Yes. Free lockers are available during your workout. Members should bring their own lock.
+
+Q: Are showers available?
+A: Yes. Clean shower facilities are available in both the men's and women's locker rooms.
+
+Q: Is Wi-Fi available?
+A: Yes. Free Wi-Fi is available throughout the gym for all members.
