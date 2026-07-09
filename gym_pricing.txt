@@ -1,0 +1,37 @@
+# gym_pricing.txt
+
+Basic Monthly Membership
+Price: 300 MAD per month. Includes full gym access, locker room access, free parking, and access during all opening hours.
+
+Premium Monthly Membership
+Price: 450 MAD per month. Includes everything in the Basic plan, unlimited group classes, complimentary towels, one fitness assessment every three months, and two free guest passes each month.
+
+Elite Monthly Membership
+Price: 650 MAD per month. Includes everything in the Premium plan, four personal training sessions each month, priority class booking, unlimited guest passes, and one nutrition consultation every month.
+
+Annual Membership
+Price: 3,000 MAD per year. Includes full gym access, unlimited group classes, complimentary towels, two fitness assessments per year, and about two months free compared with paying monthly.
+
+Registration Fee
+New members pay a one-time registration fee of 150 MAD.
+
+Student Membership
+Price: 255 MAD per month. Requires a valid student ID and is available only to members under 26 years old.
+
+Family Membership
+Price: 800 MAD per month. Includes membership for up to three family members. Additional family members may be added for 150 MAD each per month.
+
+Day Pass
+Price: 80 MAD. Includes full gym access for one day and locker room access.
+
+Guest Pass
+Price: 50 MAD per visit. Premium members receive two free guest passes every month, and Elite members receive unlimited guest passes.
+
+Personal Training
+Single Session: 200 MAD. Pack of 10 Sessions: 1,800 MAD.
+
+Towel Rental
+Price: 10 MAD per visit. Free for Premium and Elite members.
+
+Membership Freeze
+Price: Free. Available for one to three months per calendar year for eligible members.

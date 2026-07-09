@@ -1,59 +1,59 @@
 Q: What are the gym opening hours?
-A: The gym is open every day from 6:00 AM to 11:00 PM.
-
-Q: What are your weekend opening hours?
-A: On Saturdays and Sundays the gym opens at 9:00 AM and closes at 11:00 PM.
-
-Q: Is the gym open on public holidays?
-A: The gym is open on most public holidays from 9:00 AM to 6:00 PM. Holiday schedules are announced in advance.
-
-Q: How much does a monthly membership cost?
-A: A monthly membership costs 300 MAD.
-
-Q: Do you offer annual memberships?
-A: Yes. Annual memberships are available and include a discounted rate compared to paying monthly.
-
-Q: Is there a student discount?
-A: Yes. Students receive a 15% discount with a valid student ID.
-
-Q: Can I cancel my membership?
-A: Yes. You can cancel your membership by contacting the front desk at least 7 days before your renewal date.
-
-Q: What happens if I miss a payment?
-A: Members with overdue payments cannot access the gym until the outstanding balance is paid.
-
-Q: How can I sign up for a membership?
-A: You can register at the front desk or through the gym's website by completing the membership form.
-
-Q: What payment methods do you accept?
-A: We accept cash, credit cards, debit cards, and mobile payments.
-
-Q: Do you have personal trainers?
-A: Yes. Certified personal trainers are available by appointment.
-
-Q: How much does personal training cost?
-A: Personal training sessions start at 200 MAD per session, with discounted packages available.
-
-Q: What group classes do you offer?
-A: We offer yoga, HIIT, spinning, strength training, Pilates, and Zumba.
-
-Q: When are the yoga classes?
-A: Yoga classes are held every Monday, Wednesday, and Friday at 7:00 PM.
-
-Q: Do I need to book group classes?
-A: Yes. Group classes should be booked in advance through the gym app or at the front desk.
+A: The gym is open Monday through Friday from 6:00 AM to 10:00 PM. On Saturdays and Sundays, it is open from 8:00 AM to 8:00 PM.
 
 Q: What equipment is available?
-A: The gym includes treadmills, rowing machines, free weights, squat racks, cable machines, and stationary bikes.
+A: The gym includes treadmills, stationary bikes, rowing machines, elliptical trainers, squat racks, cable machines, free weights, benches, resistance machines, and stretching areas.
 
-Q: Is there a dress code?
-A: Members must wear appropriate sports clothing and clean athletic shoes while using the facilities.
+Q: What group classes do you offer?
+A: We offer Yoga, HIIT, Spinning, Strength Training, Pilates, Zumba, and Functional Fitness classes throughout the week.
+
+Q: What time are Yoga classes?
+A: Yoga classes are held every Monday, Wednesday, and Friday at 7:00 PM.
+
+Q: What time are HIIT classes?
+A: HIIT classes are held every Tuesday and Thursday at 6:30 PM and every Saturday at 10:00 AM.
+
+Q: Are there classes suitable for beginners?
+A: Yes. Yoga, Pilates, and Beginner Strength Training are recommended for members who are new to fitness.
+
+Q: Do I need to book classes in advance?
+A: Yes. Members can reserve a class through the gym app or at the front desk up to 24 hours before the class starts.
+
+Q: Is there a personal trainer available?
+A: Yes. Certified personal trainers are available for one-on-one coaching by appointment.
 
 Q: Do you provide lockers?
-A: Yes. Free lockers are available during your workout. Members should bring their own lock.
+A: Yes. Free daily lockers are available for all members. Members must bring their own padlock.
 
-Q: Are showers available?
-A: Yes. Clean shower facilities are available in both the men's and women's locker rooms.
+Q: Are towels provided?
+A: Premium members receive complimentary towels. Other members may rent a towel for 10 MAD per visit.
 
-Q: Is Wi-Fi available?
-A: Yes. Free Wi-Fi is available throughout the gym for all members.
+Q: Is parking available?
+A: Yes. Members have access to free parking for up to three hours during their workout.
+
+Q: Can I freeze my membership?
+A: Yes. Memberships can be frozen for a minimum of one month and a maximum of three months per calendar year for medical or travel reasons.
+
+Q: Can I cancel my membership?
+A: Yes. Monthly memberships require a 30-day written notice before cancellation. Annual memberships may be cancelled according to the membership agreement.
+
+Q: Can I bring a guest?
+A: Yes. Members may bring one guest per visit by paying the guest pass fee. Premium members receive two free guest passes each month.
+
+Q: What is the minimum age to join?
+A: Members must be at least 16 years old. Members under 18 require written parental consent.
+
+Q: Is there a dress code?
+A: Members must wear clean athletic clothing and closed athletic shoes while using the gym.
+
+Q: Are food and drinks allowed?
+A: Water and sports drinks are allowed. Food is only permitted in the lounge area.
+
+Q: What should I do if equipment is damaged?
+A: Please report damaged equipment immediately to the reception desk. Do not continue using faulty equipment.
+
+Q: Do you offer fitness assessments?
+A: Yes. Premium and Elite members receive complimentary fitness assessments every three months.
+
+Q: Do you offer student discounts?
+A: Yes. Students with a valid student ID receive a 15% discount on monthly memberships.
