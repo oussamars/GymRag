@@ -24,7 +24,7 @@ class GymRAG:
     def index_document(self, file_path):
         document_name = Path(file_path).stem
         existing = self.collection.get(where={"source": document_name})
-        if existing["ids"]:
+        if existing["ids"]:#we check if the id list is not empty (we suppose that the documents wont change)/ This only checks whether the document has been indexed before/It does NOT check whether the file has changed since it was indexed./A production system would delete the old chunks and re-index the document.
             print(f"Document '{document_name}' already indexed, skipping.")
             return True, None
         text, error = self._load_document(file_path)
@@ -45,11 +45,10 @@ class GymRAG:
 
     def chat(self, user_message):
         try:
-            if (len(user_message) > 15):
-                new_fact = self._extract_session_facts(user_message)
-            
-                if new_fact:
-                    self.session_facts_list.append(new_fact)
+            new_fact = self._extract_session_facts(user_message)
+        
+            if new_fact:
+                self.session_facts_list.append(new_fact)
             
             retrieved_chunks = self.retrieve(user_message)
             
@@ -86,7 +85,10 @@ class GymRAG:
         """
         return prompt
 
-    def _generate_model_response(self, prompt):
+    def _generate_model_response(self, retrieved_chunks, user_message):
+        
+        prompt = self._build_prompt(retrieved_chunks, user_message)
+        
         temp_history = self.history.copy()
         temp_history.append(
             types.Content(
@@ -136,12 +138,9 @@ class GymRAG:
             )
         )
 
-
     def _generate_answer(self, retrieved_chunks, user_message):
-        
-        prompt = self._build_prompt(retrieved_chunks, user_message)
-        
-        model_response = self._generate_model_response(prompt)
+                
+        model_response = self._generate_model_response(retrieved_chunks, user_message)
 
         self._update_history(model_response, user_message)
 
@@ -160,11 +159,9 @@ class GymRAG:
         for doc, distance in zip(search_results["documents"][0], search_results["distances"][0]):
             if distance <= self.distance_threshold:
                 filtered_results.append(doc)
-        print(filtered_results)
         return filtered_results
     
     def _query_collection(self, question, n_results):
-        print(self.collection.count())
         query_embedding = self.client.models.embed_content(
             model="gemini-embedding-001",
             contents=question,
@@ -180,7 +177,7 @@ class GymRAG:
 
     def _extract_session_facts(self, prompt):
         model_response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.5-flash-lite",
             config=types.GenerateContentConfig(
             system_instruction="""Extract any user-specific facts that could be useful later in the conversation,
             such as their name, preferences, membership type, goals, or other persistent information.
@@ -209,7 +206,7 @@ class GymRAG:
             )
         )
             rewrite_response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.5-flash-lite",
             config=types.GenerateContentConfig(
             system_instruction="""You are a search query optimizer. Given a conversation history and a 
                     follow-up question, rewrite the question into a single standalone search 
@@ -219,13 +216,12 @@ class GymRAG:
             ),
             contents=temp_history
         )
-            # print(f"user question: {question}\ncontext generated question: {rewrite_response.text.strip()}\n")
             return rewrite_response.text.strip()
     
     def _load_document(self, file_path):
     
         try:
-            with open(file_path, "r") as file:
+            with open(file_path, "r", encoding="utf-8") as file:
                 text = file.read()
                 if not text:
                     return (None, "Error: File is empty.")
