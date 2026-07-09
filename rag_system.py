@@ -26,7 +26,6 @@ class GymRAG:
             document_name = Path(file_path).stem
             existing = self.collection.get(where={"source": document_name})
             if existing["ids"]:
-                print(f"Document '{document_name}' already indexed, skipping.")
                 return True, None
             text, error = self._load_document(file_path)
             if error:
