@@ -25,7 +25,7 @@ class GymRAG:
         try:
             document_name = Path(file_path).stem
             existing = self.collection.get(where={"source": document_name})
-            if existing["ids"]:#we check if the id list is not empty (we suppose that the documents wont change)/ This only checks whether the document has been indexed before/It does NOT check whether the file has changed since it was indexed./A production system would delete the old chunks and re-index the document.
+            if existing["ids"]:
                 print(f"Document '{document_name}' already indexed, skipping.")
                 return True, None
             text, error = self._load_document(file_path)
@@ -60,7 +60,7 @@ class GymRAG:
             return self._generate_answer(retrieved_chunks, user_message)
         
         except Exception as e:
-            print(f"Error: {e}")#we can see the real error and the user will se friendly message
+            print(f"Error: {e}")
             return "Sorry, something went wrong while processing your request. Please try again."
     
 
