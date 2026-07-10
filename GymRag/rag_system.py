@@ -11,7 +11,9 @@ class GymRAG:
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
 
-        self.chroma_client = chromadb.PersistentClient(path="./chroma_data")
+        base_dir = Path(__file__).resolve().parent
+        db_path = base_dir / "chroma_data"
+        self.chroma_client = chromadb.PersistentClient(path=str(db_path))
         self.history = []
         self.session_facts_list = []
         self.collection = self.chroma_client.get_or_create_collection(
@@ -112,6 +114,8 @@ class GymRAG:
 
             Use information from <session_facts> only for facts that the user has shared during this conversation, such as their name, preferences, or membership type. When using these facts, make it clear that they were provided by the user.
 
+            Use the session facts to personalize your answer whenever they affect the user's options or pricing.
+            
             If the answer cannot be found in either <context> or <session_facts>, say that you don't have enough information.
 
             Keep answers concise and under 150 words.""",
@@ -309,4 +313,5 @@ def main():
         print(f"Assistant: {rag.chat(question)}")
 
 
-main()
+if __name__ == "__main__":
+    main()
